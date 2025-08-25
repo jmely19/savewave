@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 5: Gráficos y Visualización de Datos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+     <link rel="icon" type="image/png" href="Logo.png">
+    <style>
+        :root {
+            --verde-cana: #d4edda;
+            --verde-medio: #a8d5ba;
+            --verde-fuerte: #5cb85c;
+            --verde-oscuro: #2e7d32;
+            --celeste: #e0f7ff;
+            --celeste-oscuro: #a0d2e8;
+            --texto: #2c3e50;
+            --acento: #3498db;
+            --naranja: #ff9800;
+            --purpura: #9c27b0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--celeste), var(--verde-cana));
+            color: var(--texto);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+      /* Header */
+        header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 40px;
+        background: transparent;
+        }
+
+        header nav a {
+        position: relative;
+        color: #000000;
+        text-decoration: none;
+        transition: color 0.3s;
+        padding-bottom: 4px;
+        }
+
+        header nav a:hover,
+        header nav a.active {
+        color: #32cd32;
+        }
+
+
+        header nav a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 0;
+        height: 2px;
+        background: #32cd32;
+        transition: width 0.3s;
+        }
+
+        header nav a:hover::after,
+        header nav a.active::after {
+        width: 100%;
+        }
+
+        /* Logo */
+        .logo {
+        display: flex;
+        align-items: center;
+        font-size: 24px;
+        font-weight: bold;
+        }
+
+        .logo img {
+        width: 40px;
+        margin-right: 10px;
+        }
+
+        /* Menú de navegación */
+        nav {
+        display: flex;
+        align-items: center;
+        }
+
+        nav a {
+        margin: 0 15px;
+        color: #ffffff; /* Usa blanco para mejor contraste */
+        text-decoration: none;
+        font-weight: 500;
+        position: relative;
+        padding-bottom: 4px;
+        transition: color 0.3s;
+        }
+
+        nav a:hover,
+        nav a.active {
+        color: #32cd32;
+        }
+
+        nav a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 0;
+        height: 2px;
+        background: #32cd32;
+        transition: width 0.3s;
+        }
+
+        nav a:hover::after,
+        nav a.active::after {
+        width: 100%;
+        }
+
+        /* Barra de búsqueda */
+        .search-bar {
+        background-color: transparent;
+        border: 1.5px solid #333;
+        border-radius: 20px;
+        padding: 5px 15px;
+        display: flex;
+        align-items: center;
+        }
+
+        .search-bar input {
+        background: transparent;
+        border: none;
+        color: rgb(0, 0, 0);
+        outline: none;
+        padding: 5px;
+        }
+
+        .user-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 6px; /* Reduce el espacio entre la barra y el icono */
+        background: transparent;
+        border: none;
+        font-size: 1.6em;
+        color: #32cd32;
+        cursor: pointer;
+        text-decoration: none;
+        transition: color 0.2s;
+        }
+
+        .user-btn:hover {
+        color: #228b22;
+        }
+
+        .header-right {
+        display: flex;
+        align-items: center;
+        gap: 6px; /* Espacio pequeño entre barra y usuario */
+        }
+
+            /*Resalto del texto*/
+
+            .highlight-search {
+            background: yellow;
+            color: black;
+            border-radius: 3px;
+            padding: 0 2px;
+            }
+        
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+                .page-header {
+            background: linear-gradient(135deg, var(--verde-fuerte), var(--purpura));
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .page-header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .back-btn {
+        display: inline-block;
+        margin-bottom: 24px;
+        padding: 8px 18px;
+        background: var(--purpura);
+        color: #fff;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 1rem;
+        transition: background 0.2s;
+        }
+        .back-btn:hover {
+        background: var(--verde-fuerte  );
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 5px solid var(--naranja);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        
+        h2 {
+            color: var(--purpura);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--verde-medio);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        h2 i {
+            color: var(--naranja);
+        }
+        
+        h3 {
+            color: var(--verde-oscuro);
+            margin: 15px 0 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        h3 i {
+            color: var(--verde-fuerte);
+            font-size: 0.9em;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        .image-placeholder {
+            background: linear-gradient(135deg, var(--celeste-oscuro), var(--verde-medio));
+            height: 200px;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .image-placeholder i {
+            font-size: 2.5rem;
+            opacity: 0.8;
+        }
+        
+        .tip-box {
+            background-color: var(--verde-cana);
+            border-left: 5px solid var(--verde-oscuro);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .tip-box i {
+            color: var(--verde-oscuro);
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .example {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: monospace;
+            overflow-x: auto;
+            border-left: 3px solid var(--verde-fuerte);
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .feature-item i {
+            color: var(--verde-fuerte);
+            font-size: 1.2rem;
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+        
+        .chart-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            height: 300px;
+        }
+        
+        .interactive-box {
+            background: linear-gradient(135deg, var(--celeste), var(--verde-cana));
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 2px dashed var(--verde-oscuro);
+        }
+        
+        .btn {
+            background-color: var(--verde-oscuro);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .btn:hover {
+            background-color: var(--verde-fuerte);
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 10px 15px;
+            background-color: var(--celeste-oscuro);
+            border-radius: 5px 5px 0 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .tab.active {
+            background-color: var(--verde-fuerte);
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 15px;
+            background-color: white;
+            border-radius: 0 5px 5px 5px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+
+       /* ===== FOOTER ===== */
+    .footer {
+      background-color: #0a1a2b;
+      color: white;
+      padding: 40px 20px;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    .footer-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: auto;
+      text-align: left;
+    }
+
+    .footer-section {
+      flex: 1 1 250px;
+      margin: 10px;
+    }
+
+    .footer-logo {
+      width: 220px;
+    }
+
+    .footer h2 {
+      color: #7ed957;
+      margin-top: 10px;
+    }
+
+    .footer h3 {
+      color: #7ed957;
+      margin-bottom: 10px;
+    }
+
+    .footer-section p {
+      max-width: 260px;
+      line-height: 1.6;
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-links li {
+      margin: 6px 0;
+    }
+
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+      color: #7ed957;
+      cursor: pointer;
+    }
+
+    .footer-socials img {
+      width: 30px;
+      margin: 5px;
+      transition: transform 0.2s;
+    }
+
+    .footer-socials img:hover {
+      transform: scale(1.2);
+    }
+
+    .footer-line {
+      margin: 30px auto;
+      border-color: #2c3e50;
+      max-width: 90%;
+    }
+
+    .footer-copy {
+      font-size: 14px;
+      margin-top: 10px;
+    }
+        
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .chart-container {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+        <header>
+  <div class="logo">
+    <img src="Logo.png" alt="SafeWave Logo" />
+    SafeWave
+  </div>
+  <nav>
+    <a href="../index.html">Home</a>
+    <a href="../about-us.html">About us</a>
+    <a href="Courses.html"  class="active">Courses</a>
+    <a href="#">Gallery</a>
+    <a href="../Contact.html">Contact</a>
+  </nav>
+  <div class="header-right">
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Buscar..." />
+      🔍
+    </div>
+    <a href="L-R.html" class="user-btn" title="Registrarse">
+      <i class="fa-solid fa-user"></i>
+    </a>
+  </div>
+</header>
+
+    <div class="container">
+        <div class="page-header">
+           <h1><i class="fas fa-chart-bar"></i> Módulo 5: Gráficos y Visualización de Datos</h1>
+            <p class="subtitle">Aprende a crear gráficos de columnas, líneas o circulares que permitan visualizar datos de forma clara y atractiva para su análisis y presentación.</p>
+        </div>
+
+        <a href="Excel.html" class="back-btn">
+            ← Volver a Excel
+        </a>
+    
+        <div class="card">
+            <h2><i class="fas fa-paint-brush"></i> Importancia de la Visualización de Datos</h2>
+            <p>Los gráficos transforman datos complejos en información visual fácil de entender, permitiendo identificar patrones, tendencias y relaciones que serían difíciles de discernir en una tabla de números.</p>
+            
+            <div class="image-placeholder">
+                <i class="fas fa-chart-pie"></i>
+                [Imagen: Comparación entre tabla de datos y su representación gráfica]
+            </div>
+            
+            <div class="grid">
+                <div>
+                    <h3><i class="fas fa-brain"></i> Comprensión más rápida</h3>
+                    <p>Nuestro cerebro procesa información visual 60,000 veces más rápido que el texto.</p>
+                </div>
+                <div>
+                    <h3><i class="fas fa-lightbulb"></i> Identificación de patrones</h3>
+                    <p>Los gráficos facilitan la detección de tendencias y relaciones entre variables.</p>
+                </div>
+                <div>
+                    <h3><i class="fas fa-presentation"></i> Comunicación efectiva</h3>
+                    <p>Permiten transmitir información compleja de manera clara y convincente.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2><i class="fas fa-chart-column"></i> Tipos de Gráficos en Excel</h2>
+            <p>Excel ofrece una amplia variedad de gráficos. Seleccionar el tipo adecuado es crucial para comunicar efectivamente tu mensaje.</p>
+            
+            <div class="tabs">
+                <div class="tab active" onclick="changeTab(0)">Columnas</div>
+                <div class="tab" onclick="changeTab(1)">Líneas</div>
+                <div class="tab" onclick="changeTab(2)">Circular</div>
+                <div class="tab" onclick="changeTab(3)">Barras</div>
+                <div class="tab" onclick="changeTab(4)">Área</div>
+            </div>
+            
+            <div class="tab-content active">
+                <h3><i class="fas fa-chart-column"></i> Gráficos de Columnas</h3>
+                <p>Ideales para comparar valores entre categorías o mostrar cambios a lo largo del tiempo cuando las categorías tienen texto largo.</p>
+                <div class="chart-container">
+                    <canvas id="columnChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="tab-content">
+                <h3><i class="fas fa-chart-line"></i> Gráficos de Líneas</h3>
+                <p>Perfectos para mostrar tendencias a lo largo del tiempo, especialmente con muchos puntos de datos.</p>
+                <div class="chart-container">
+                    <canvas id="lineChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="tab-content">
+                <h3><i class="fas fa-chart-pie"></i> Gráficos Circulares</h3>
+                <p>Excelentes para mostrar proporciones o porcentajes de un todo. Limítalos a pocas categorías (5-7 como máximo).</p>
+                <div class="chart-container">
+                    <canvas id="pieChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="tab-content">
+                <h3><i class="fas fa-bars"></i> Gráficos de Barras</h3>
+                <p>Similares a los de columnas pero orientados horizontalmente. Útiles cuando los nombres de categorías son largos.</p>
+                <div class="chart-container">
+                    <canvas id="barChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="tab-content">
+                <h3><i class="fas fa-chart-area"></i> Gráficos de Área</h3>
+                <p>Similares a los de línea pero con el área bajo la línea rellena. Muestran la magnitud del cambio a lo largo del tiempo.</p>
+                <div class="chart-container">
+                    <canvas id="areaChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2><i class="fas fa-magic"></i> Creación de Gráficos en Excel</h2>
+            <p>Sigue estos pasos para crear gráficos efectivos que comuniquen claramente tu mensaje.</p>
+            
+            <div class="interactive-box">
+                <h3><i class="fas fa-list-ol"></i> Proceso de creación</h3>
+                <div class="feature-item">
+                    <i class="fas fa-1"></i>
+                    <div>
+                        <strong>Selecciona tus datos:</strong> Incluye los encabezados de fila y columna para que Excel identifique correctamente las series y categorías.
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <i class="fas fa-2"></i>
+                    <div>
+                        <strong>Inserta el gráfico:</strong> Ve a la pestaña "Insertar" y elige el tipo de gráfico que mejor se adapte a tus datos.
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <i class="fas fa-3"></i>
+                    <div>
+                        <strong>Personaliza el diseño:</strong> Utiliza las herramientas de diseño de gráficos para ajustar títulos, leyendas y estilos.
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <i class="fas fa-4"></i>
+                    <div>
+                        <strong>Formatea los elementos:</strong> Mejora la apariencia modificando colores, estilos y agregando elementos como etiquetas de datos.
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <i class="fas fa-5"></i>
+                    <div>
+                        <strong>Refina y ajusta:</strong> Asegúrate de que tu gráfico comunique claramente el mensaje y sea visualmente atractivo.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="image-placeholder">
+                <i class="fas fa-screenshot"></i>
+                [Imagen: Captura de pantalla del proceso de creación de gráficos en Excel]
+            </div>
+            
+            <button class="btn" onclick="simulateChartCreation()">
+                <i class="fas fa-play"></i> Simular creación de gráfico
+            </button>
+        </div>
+        
+        <div class="card">
+            <h2><i class="fas fa-sliders-h"></i> Elementos de un Gráfico</h2>
+            <p>Conocer los componentes de un gráfico te permitirá personalizarlo efectivamente.</p>
+            
+            <div class="image-placeholder">
+                <i class="fas fa-puzzle-piece"></i>
+                [Imagen: Diagrama etiquetado con los elementos de un gráfico de Excel]
+            </div>
+            
+            <div class="grid">
+                <div>
+                    <h3><i class="fas fa-heading"></i> Título del gráfico</h3>
+                    <p>Describe claramente lo que muestra el gráfico. Debe ser conciso pero informativo.</p>
+                </div>
+                <div>
+                    <h3><i class="fas fa-bars"></i> Ejes</h3>
+                    <p>Proporcionan escala y contexto. Personaliza los intervalos y formatos para mejorar la legibilidad.</p>
+                </div>
+                <div>
+                    <h3><i class="fas fa-shapes"></i> Series de datos</h3>
+                    <p>Representación visual de los valores. Puedes formatear colores y estilos para destacar información.</p>
+                </div>
+                <div>
+                    <h3><i class="fas fa-list"></i> Leyenda</h3>
+                    <p>Identifica las series de datos. Colócala donde no interfiera con la visualización.</p>
+                </div>
+                <div>
+                    <h3><i class="fas fa-tag"></i> Etiquetas de datos</h3>
+                    <p>Muestran valores específicos. Úsalas con moderación para no saturar el gráfico.</p>
+                </div>
+                <div>
+                    <h3><i class="fas fa-table"></i> Líneas de división</h3>
+                    <p>Facilitan la lectura de valores. Ajústalas para que ayuden sin distraer.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2><i class="fas fa-rocket"></i> Mejores Prácticas</h2>
+            <p>Sigue estas recomendaciones para crear gráficos efectivos y profesionales.</p>
+            
+            <div class="tip-box">
+                <i class="fas fa-check-circle"></i>
+                <div>
+                    <strong>Mantén la simplicidad:</strong> Elimina elementos innecesarios que no aporten información. Menos es más en visualización de datos.
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <i class="fas fa-check-circle"></i>
+                <div>
+                    <strong>Usa colores con propósito:</strong> Asigna colores consistentes y significativos. Evita los arcoíris de colores que distraen.
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <i class="fas fa-check-circle"></i>
+                <div>
+                    <strong>Etiqueta claramente:</strong> Asegúrate de que todos los elementos estén correctamente etiquetados para una comprensión inmediata.
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <i class="fas fa-check-circle"></i>
+                <div>
+                    <strong>Destaca lo importante:</strong> Utiliza el formato para dirigir la atención hacia los datos clave o insights principales.
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <i class="fas fa-check-circle"></i>
+                <div>
+                    <strong>Cuenta una historia:</strong> Tu gráfico debe tener un mensaje claro. Si no puedes explicarlo en una frase, necesita simplificación.
+                </div>
+            </div>
+            
+            <div class="image-placeholder">
+                <i class="fas fa-chart-line"></i>
+                [Imagen: Ejemplo de gráfico bien diseñado vs. uno mal diseñado]
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2><i class="fas fa-tasks"></i> Ejercicio Práctico</h2>
+            <p>Ahora es tu turno de practicar. Sigue estos pasos para crear tu primer gráfico.</p>
+            
+            <div class="interactive-box">
+                <h3><i class="fas fa-pen"></i> Instrucciones</h3>
+                <div class="feature-item">
+                    <i class="fas fa-table"></i>
+                    <div>
+                        <strong>Prepara tus datos:</strong> Crea una tabla simple con categorías y valores. Por ejemplo: Frutas y cantidades vendidas.
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <i class="fas fa-chart-bar"></i>
+                    <div>
+                        <strong>Selecciona el tipo de gráfico:</strong> Elige el gráfico de columnas para comparar las cantidades.
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <i class="fas fa-palette"></i>
+                    <div>
+                        <strong>Personaliza:</strong> Añade un título descriptivo, ajusta colores y agrega etiquetas de datos.
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <i class="fas fa-eye"></i>
+                    <div>
+                        <strong>Analiza:</strong> ¿Qué insights obtienes de tu gráfico? ¿Qué fruta se vende más? ¿Cuál menos?
+                    </div>
+                </div>
+            </div>
+            
+            <button class="btn" onclick="showSolution()">
+                <i class="fas fa-lightbulb"></i> Ver ejemplo de solución
+            </button>
+        </div>
+    </div>
+            <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+    <div class="footer-container">
+        
+        <!-- Logo y descripción -->
+        <div class="footer-section">
+        <img src="Footer.png" alt="Safe Wave Logo" class="footer-logo">
+        <p>Connecting young people, creating unforgettable experiences and building the future, one click at a time.</p>
+        </div>
+
+        <!-- Enlaces rápidos -->
+        <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul class="footer-links">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../about-us.html">About Us</a></li>
+            <li><a href="../Courses.html">Courses</a></li>
+            <li><a href="#">Gallery</a></li>
+            <li><a href="../Contact.html">Contact</a></li>
+        </ul>
+        </div>
+
+        <!-- Contacto -->
+        <div class="footer-section">
+        <h3>Contact</h3>
+        <p>Safewafe@gmail.com</p>
+        <p>+507 1234-5678</p>
+        </div>
+
+        <!-- Redes sociales -->
+        <div class="footer-section">
+        <h3>Follow us at</h3>
+        <div class="footer-socials">
+            <a href="#"><img src="facebook-icon.png" alt="Facebook"></a>
+            <a href="#"><img src="instagram-icon.png" alt="Instagram"></a>
+            <a href="#"><img src="whatsapp-icon.png" alt="WhatsApp"></a>
+        </div>
+        </div>
+    </div>
+
+    <script>
+
+                    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('searchInput');
+        if (!searchInput) return;
+        searchInput.addEventListener('keyup', function(e) {
+            const query = e.target.value.toLowerCase();
+            // Elimina resaltados anteriores
+            document.querySelectorAll('.highlight-search').forEach(el => {
+            el.outerHTML = el.innerText;
+            });
+            if (query.length > 1) {
+            // Busca en todos los textos de la página
+            const mainArea = document.querySelector('.container');
+            const walker = document.createTreeWalker(mainArea, NodeFilter.SHOW_TEXT, null, false);
+            while(walker.nextNode()) {
+                const node = walker.currentNode;
+                if (node.nodeValue.toLowerCase().includes(query)) {
+                const span = document.createElement('span');
+                span.className = 'highlight-search';
+                const idx = node.nodeValue.toLowerCase().indexOf(query);
+                const before = node.nodeValue.slice(0, idx);
+                const match = node.nodeValue.slice(idx, idx + query.length);
+                const after = node.nodeValue.slice(idx + query.length);
+                span.textContent = match;
+                const frag = document.createDocumentFragment();
+                if (before) frag.appendChild(document.createTextNode(before));
+                frag.appendChild(span);
+                if (after) frag.appendChild(document.createTextNode(after));
+                node.parentNode.replaceChild(frag, node);
+                }
+            }
+            }
+        });
+    });
+        // Función para cambiar pestañas
+        function changeTab(index) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            document.querySelectorAll('.tab')[index].classList.add('active');
+            document.querySelectorAll('.tab-content')[index].classList.add('active');
+        }
+        
+        // Simular creación de gráfico
+        function simulateChartCreation() {
+            alert('Simulación: En Excel, seleccionarías tus datos, irías a la pestaña "Insertar", elegirías el tipo de gráfico y personalizarías su apariencia.');
+        }
+        
+        // Mostrar solución
+        function showSolution() {
+            alert('Solución ejemplo: Un gráfico de columnas mostrando Manzanas: 150, Naranjas: 85, Plátanos: 120, Fresas: 65. Las manzanas son las más vendidas.');
+        }
+        
+        // Inicializar gráficos cuando la página cargue
+        window.onload = function() {
+            // Gráfico de columnas
+            const columnCtx = document.getElementById('columnChart').getContext('2d');
+            new Chart(columnCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Ventas 2023',
+                        data: [120, 150, 180, 90, 210, 240],
+                        backgroundColor: [
+                            'rgba(92, 184, 92, 0.7)',
+                            'rgba(91, 192, 222, 0.7)',
+                            'rgba(240, 173, 78, 0.7)',
+                            'rgba(217, 83, 79, 0.7)',
+                            'rgba(156, 39, 176, 0.7)',
+                            'rgba(41, 110, 176, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(92, 184, 92, 1)',
+                            'rgba(91, 192, 222, 1)',
+                            'rgba(240, 173, 78, 1)',
+                            'rgba(217, 83, 79, 1)',
+                            'rgba(156, 39, 176, 1)',
+                            'rgba(41, 110, 176, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+            
+            // Gráfico de líneas
+            const lineCtx = document.getElementById('lineChart').getContext('2d');
+            new Chart(lineCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Temperatura Máxima',
+                        data: [22, 25, 27, 30, 32, 35],
+                        borderColor: 'rgba(217, 83, 79, 1)',
+                        backgroundColor: 'rgba(217, 83, 79, 0.2)',
+                        tension: 0.3,
+                        fill: false
+                    }, {
+                        label: 'Temperatura Mínima',
+                        data: [15, 16, 18, 20, 22, 24],
+                        borderColor: 'rgba(41, 110, 176, 1)',
+                        backgroundColor: 'rgba(41, 110, 176, 0.2)',
+                        tension: 0.3,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+            
+            // Gráfico circular
+            const pieCtx = document.getElementById('pieChart').getContext('2d');
+            new Chart(pieCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Python', 'JavaScript', 'Java', 'C#', 'PHP'],
+                    datasets: [{
+                        data: [35, 25, 20, 15, 5],
+                        backgroundColor: [
+                            'rgba(92, 184, 92, 0.7)',
+                            'rgba(91, 192, 222, 0.7)',
+                            'rgba(240, 173, 78, 0.7)',
+                            'rgba(217, 83, 79, 0.7)',
+                            'rgba(156, 39, 176, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(92, 184, 92, 1)',
+                            'rgba(91, 192, 222, 1)',
+                            'rgba(240, 173, 78, 1)',
+                            'rgba(217, 83, 79, 1)',
+                            'rgba(156, 39, 176, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+            
+            // Gráfico de barras
+            const barCtx = document.getElementById('barChart').getContext('2d');
+            new Chart(barCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Manzanas', 'Naranjas', 'Plátanos', 'Fresas', 'Uvas'],
+                    datasets: [{
+                        label: 'Cantidad Vendida (kg)',
+                        data: [150, 85, 120, 65, 95],
+                        backgroundColor: 'rgba(91, 192, 222, 0.7)',
+                        borderColor: 'rgba(91, 192, 222, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+            
+            // Gráfico de área
+            const areaCtx = document.getElementById('areaChart').getContext('2d');
+            new Chart(areaCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Ventas Acumuladas',
+                        data: [120, 270, 450, 540, 750, 990],
+                        borderColor: 'rgba(92, 184, 92, 1)',
+                        backgroundColor: 'rgba(92, 184, 92, 0.2)',
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        };
+    </script>
+</body>
+</html>
