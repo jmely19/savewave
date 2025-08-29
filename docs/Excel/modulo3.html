@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 3: Fórmulas y Funciones Básicas en Excel</title>
+     <link rel="icon" type="image/png" href="Logo.png">
+    <style>
+        :root {
+            --primary-color: #217346; /* Verde Excel */
+            --secondary-color: #1f4e79; /* Azul oscuro */
+            --accent-color: #e7f3e6; /* Verde claro */
+            --text-color: #333;
+            --light-gray: #f5f5f5;
+            --border-color: #ddd;
+            --code-bg: #f8f9fa;
+            --success-color: #28a745;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+                /* Header */
+        header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 40px;
+        background: transparent;
+        }
+
+        header nav a {
+        position: relative;
+        color: #000000;
+        text-decoration: none;
+        transition: color 0.3s;
+        padding-bottom: 4px;
+        }
+
+        header nav a:hover,
+        header nav a.active {
+        color: #32cd32;
+        }
+
+
+        header nav a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 0;
+        height: 2px;
+        background: #32cd32;
+        transition: width 0.3s;
+        }
+
+        header nav a:hover::after,
+        header nav a.active::after {
+        width: 100%;
+        }
+
+        /* Logo */
+        .logo {
+        display: flex;
+        align-items: center;
+        font-size: 24px;
+        font-weight: bold;
+        }
+
+        .logo img {
+        width: 40px;
+        margin-right: 10px;
+        }
+
+        /* Menú de navegación */
+        nav {
+        display: flex;
+        align-items: center;
+        }
+
+        nav a {
+        margin: 0 15px;
+        color: #ffffff; /* Usa blanco para mejor contraste */
+        text-decoration: none;
+        font-weight: 500;
+        position: relative;
+        padding-bottom: 4px;
+        transition: color 0.3s;
+        }
+
+        nav a:hover,
+        nav a.active {
+        color: #32cd32;
+        }
+
+        nav a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 0;
+        height: 2px;
+        background: #32cd32;
+        transition: width 0.3s;
+        }
+
+        nav a:hover::after,
+        nav a.active::after {
+        width: 100%;
+        }
+
+        /* Barra de búsqueda */
+        .search-bar {
+        background-color: transparent;
+        border: 1.5px solid #333;
+        border-radius: 20px;
+        padding: 5px 15px;
+        display: flex;
+        align-items: center;
+        }
+
+        .search-bar input {
+        background: transparent;
+        border: none;
+        color: rgb(0, 0, 0);
+        outline: none;
+        padding: 5px;
+        }
+
+        .user-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 6px; /* Reduce el espacio entre la barra y el icono */
+        background: transparent;
+        border: none;
+        font-size: 1.6em;
+        color: #32cd32;
+        cursor: pointer;
+        text-decoration: none;
+        transition: color 0.2s;
+        }
+
+        .user-btn:hover {
+        color: #228b22;
+        }
+
+        .header-right {
+        display: flex;
+        align-items: center;
+        gap: 6px; /* Espacio pequeño entre barra y usuario */
+        }
+
+            /*Resalto del texto*/
+
+            .highlight-search {
+            background: yellow;
+            color: black;
+            border-radius: 3px;
+            padding: 0 2px;
+            }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .page-header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .back-btn {
+        display: inline-block;
+        margin-bottom: 24px;
+        padding: 8px 18px;
+        background: var(--secondary-color);
+        color: #fff;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 1rem;
+        transition: background 0.2s;
+        }
+        .back-btn:hover {
+        background: var(--primary-color);
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .module-content {
+            padding: 30px;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin: 25px 0 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+        
+        h3 {
+            color: var(--secondary-color);
+            margin: 20px 0 10px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        .card {
+            background-color: var(--light-gray);
+            border-left: 4px solid var(--primary-color);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .highlight {
+            background-color: var(--accent-color);
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .grid-item {
+            background-color: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+        
+        .grid-item h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+        
+        .advantages {
+            background-color: #e7f3ff;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+       /* ===== FOOTER ===== */
+    .footer {
+      background-color: #0a1a2b;
+      color: white;
+      padding: 40px 20px;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    .footer-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: auto;
+      text-align: left;
+    }
+
+    .footer-section {
+      flex: 1 1 250px;
+      margin: 10px;
+    }
+
+    .footer-logo {
+      width: 220px;
+    }
+
+    .footer h2 {
+      color: #7ed957;
+      margin-top: 10px;
+    }
+
+    .footer h3 {
+      color: #7ed957;
+      margin-bottom: 10px;
+    }
+
+    .footer-section p {
+      max-width: 260px;
+      line-height: 1.6;
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-links li {
+      margin: 6px 0;
+    }
+
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+      color: #7ed957;
+      cursor: pointer;
+    }
+
+    .footer-socials img {
+      width: 30px;
+      margin: 5px;
+      transition: transform 0.2s;
+    }
+
+    .footer-socials img:hover {
+      transform: scale(1.2);
+    }
+
+    .footer-line {
+      margin: 30px auto;
+      border-color: #2c3e50;
+      max-width: 90%;
+    }
+
+    .footer-copy {
+      font-size: 14px;
+      margin-top: 10px;
+    }
+        
+        /* Nuevos estilos para las imágenes */
+        .image-placeholder {
+            background-color: #f9f9f9;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            color: #888;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .image-placeholder i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: #aaa;
+        }
+        
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .image-card {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+        
+        .image-card .image-placeholder {
+            margin: 0;
+            border: none;
+            border-radius: 0;
+            min-height: 150px;
+        }
+        
+        .image-card-content {
+            padding: 15px;
+        }
+        
+        .image-caption {
+            font-style: italic;
+            color: #666;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        
+        /* Estilos para código y ejemplos */
+        .code-example {
+            background-color: var(--code-bg);
+            border-left: 4px solid var(--secondary-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .formula {
+            color: var(--success-color);
+            font-weight: bold;
+        }
+        
+        .example-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .example-table th, .example-table td {
+            border: 1px solid var(--border-color);
+            padding: 8px;
+            text-align: left;
+        }
+        
+        .example-table th {
+            background-color: var(--accent-color);
+        }
+        
+        .example-table tr:nth-child(even) {
+            background-color: var(--light-gray);
+        }
+        
+        .function-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .function-table th, .function-table td {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .function-table th {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .function-table tr:nth-child(even) {
+            background-color: var(--light-gray);
+        }
+        
+        .tip-box {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .grid-container, .image-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .module-content {
+                padding: 20px;
+            }
+            
+            .function-table {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+    <!-- Iconos para los placeholders -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+  <div class="logo">
+    <img src="Logo.png" alt="SafeWave Logo" />
+    SafeWave
+  </div>
+  <nav>
+    <a href="../index.html">Home</a>
+    <a href="../about-us.html">About us</a>
+    <a href="Courses.html"  class="active">Courses</a>
+    <a href="#">Gallery</a>
+    <a href="../Contact.html">Contact</a>
+  </nav>
+  <div class="header-right">
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Buscar..." />
+      🔍
+    </div>
+    <a href="L-R.html" class="user-btn" title="Registrarse">
+      <i class="fa-solid fa-user"></i>
+    </a>
+  </div>
+</header>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Módulo 3: Fórmulas y Funciones Básicas</h1>
+            <p class="subtitle">Aprende a realizar cálculos automáticos con funciones como SUMA, PROMEDIO, MÍNIMO, MÁXIMO y más</p>
+        </div>
+
+        <a href="Excel.html" class="back-btn">
+            ← Volver a Excel
+        </a>
+        
+        <div class="module-content">
+            <h2>Introducción a las fórmulas en Excel</h2>
+            
+            <!-- Espacio para imagen introductoria -->
+            <div class="image-placeholder">
+                <i class="fas fa-image"></i>
+                <p>Espacio para imagen: Barra de fórmulas de Excel con una función SUMA</p>
+                <small>Recomendación: Captura de pantalla mostrando la escritura de una fórmula</small>
+            </div>
+            
+            <h3>¿Qué es una fórmula?</h3>
+            <div class="card">
+                <ul>
+                    <li>Una <span class="highlight">expresión</span> que realiza cálculos con los datos de tu hoja de cálculo.</li>
+                    <li>Siempre comienza con el signo <span class="highlight">=</span> (igual).</li>
+                    <li>Puede contener números, referencias a celdas, operadores y funciones.</li>
+                    <li>Ejemplo: <span class="formula">=A1+B1</span> suma los valores de las celdas A1 y B1.</li>
+                </ul>
+            </div>
+            
+            <h3>Operadores aritméticos básicos:</h3>
+            
+            <table class="function-table">
+                <tr>
+                    <th>Operador</th>
+                    <th>Función</th>
+                    <th>Ejemplo</th>
+                    <th>Resultado</th>
+                </tr>
+                <tr>
+                    <td>+</td>
+                    <td>Suma</td>
+                    <td class="formula">=A1+B1</td>
+                    <td>Suma los valores de A1 y B1</td>
+                </tr>
+                <tr>
+                    <td>-</td>
+                    <td>Resta</td>
+                    <td class="formula">=A1-B1</td>
+                    <td>Resta B1 de A1</td>
+                </tr>
+                <tr>
+                    <td>*</td>
+                    <td>Multiplicación</td>
+                    <td class="formula">=A1*B1</td>
+                    <td>Multiplica A1 por B1</td>
+                </tr>
+                <tr>
+                    <td>/</td>
+                    <td>División</td>
+                    <td class="formula">=A1/B1</td>
+                    <td>Divide A1 entre B1</td>
+                </tr>
+            </table>
+            
+            <h3>Ejemplo práctico:</h3>
+            <p>Para calcular el total de ventas diarias donde B2, C2 y D2 son las ventas por turno:</p>
+            <div class="code-example">
+                =B2+C2+D2
+            </div>
+            
+            <h2>Referencias de celdas</h2>
+            
+            <!-- Espacio para imagen de referencias -->
+            <div class="image-placeholder">
+                <i class="fas fa-image"></i>
+                <p>Espacio para imagen: Ejemplo de referencias relativas y absolutas</p>
+                <small>Recomendación: Captura mostrando cómo cambian las referencias al copiar fórmulas</small>
+            </div>
+            
+            <h3>Referencias relativas:</h3>
+            <ul>
+                <li>Se ajustan automáticamente al copiar la fórmula a otras celdas.</li>
+                <li>Ejemplo: Si copias <span class="formula">=A1+B1</span> de la fila 1 a la fila 2, se convertirá en <span class="formula">=A2+B2</span>.</li>
+            </ul>
+            
+            <h3>Referencias absolutas (con $):</h3>
+            <ul>
+                <li>Fijan la columna o fila al copiarse.</li>
+                <li>Ejemplo: <span class="formula">=$A$1+B1</span> siempre usará la celda A1, aunque la fórmula se copie a otra fila.</li>
+            </ul>
+            
+            <h3>¿Cuándo usarlas?</h3>
+            <div class="grid-container">
+                <div class="grid-item">
+                    <h3>Absolutas</h3>
+                    <p>Para constantes como tasas de cambio, factores fijos, etc.</p>
+                    <div class="code-example">
+                        =$B$1*A2
+                    </div>
+                    <p>Donde $B$1 contiene una tasa fija que se aplica a diferentes valores en la columna A.</p>
+                </div>
+                
+                <div class="grid-item">
+                    <h3>Relativas</h3>
+                    <p>Para cálculos repetitivos que deben adaptarse a cada fila/columna.</p>
+                    <div class="code-example">
+                        =A2*B2
+                    </div>
+                    <p>Al copiarse a la fila 3, se convierte en =A3*B3, etc.</p>
+                </div>
+            </div>
+            
+            <h2>Funciones básicas de Excel</h2>
+            
+            <!-- Espacio para imagen de funciones -->
+            <div class="image-placeholder">
+                <i class="fas fa-image"></i>
+                <p>Espacio para imagen: Menú de funciones en Excel o ejemplo de uso</p>
+                <small>Recomendación: Captura mostrando el asistente de funciones o autosuma</small>
+            </div>
+            
+            <table class="function-table">
+                <tr>
+                    <th>Función</th>
+                    <th>Descripción</th>
+                    <th>Sintaxis</th>
+                    <th>Ejemplo</th>
+                </tr>
+                <tr>
+                    <td>SUMA</td>
+                    <td>Suma un rango de celdas</td>
+                    <td class="formula">=SUMA(rango)</td>
+                    <td class="formula">=SUMA(A1:A10)</td>
+                </tr>
+                <tr>
+                    <td>PROMEDIO</td>
+                    <td>Calcula la media de valores</td>
+                    <td class="formula">=PROMEDIO(rango)</td>
+                    <td class="formula">=PROMEDIO(B2:B20)</td>
+                </tr>
+                <tr>
+                    <td>CONTAR</td>
+                    <td>Cuenta celdas con números</td>
+                    <td class="formula">=CONTAR(rango)</td>
+                    <td class="formula">=CONTAR(C1:C100)</td>
+                </tr>
+                <tr>
+                    <td>MÁX</td>
+                    <td>Devuelve el valor más alto</td>
+                    <td class="formula">=MÁX(rango)</td>
+                    <td class="formula">=MÁX(D2:D50)</td>
+                </tr>
+                <tr>
+                    <td>MÍN</td>
+                    <td>Devuelve el valor más bajo</td>
+                    <td class="formula">=MÍN(rango)</td>
+                    <td class="formula">=MÍN(E2:E50)</td>
+                </tr>
+            </table>
+            
+            <h3>Aplicación real:</h3>
+            <div class="grid-container">
+                <div class="grid-item">
+                    <h4>Calificaciones</h4>
+                    <div class="code-example">
+                        =PROMEDIO(F2:F30)
+                    </div>
+                    <p>Calcula la calificación media de un grupo de estudiantes.</p>
+                </div>
+                
+                <div class="grid-item">
+                    <h4>Ventas</h4>
+                    <div class="code-example">
+                        =MÁX(G2:G100)
+                    </div>
+                    <p>Identifica el día con más ventas en un trimestre.</p>
+                </div>
+            </div>
+            
+            <h2>Uso del Autosuma</h2>
+            
+            <!-- Espacio para imagen de autosuma -->
+            <div class="image-placeholder">
+                <i class="fas fa-image"></i>
+                <p>Espacio para imagen: Botón de autosuma en Excel</p>
+                <small>Recomendación: Captura mostrando el menú desplegable de autosuma</small>
+            </div>
+            
+            <h3>¿Cómo funciona?</h3>
+            <ol>
+                <li>Selecciona la celda donde quieres el resultado (normalmente debajo de una columna de números o al final de una fila).</li>
+                <li>Haz clic en el botón <strong>Autosuma (Σ)</strong> en la pestaña <strong>Inicio</strong>.</li>
+                <li>Excel sugerirá un rango. Verifica que sea correcto.</li>
+                <li>Presiona <strong>Enter</strong> para confirmar.</li>
+            </ol>
+            
+            <h3>Ventajas:</h3>
+            <div class="card advantages">
+                <ul>
+                    <li><span class="highlight">Rápido y eficiente</span> para sumar columnas/filas completas.</li>
+                    <li>También funciona con otras funciones como <span class="highlight">PROMEDIO, CONTAR, MÁX, MÍN</span> (haciendo clic en la flecha junto a Σ).</li>
+                    <li>Detecta automáticamente el rango a calcular basándose en los datos adyacentes.</li>
+                </ul>
+            </div>
+            
+            <h2>Barra de fórmulas y asistente de funciones</h2>
+            
+            <div class="grid-container">
+                <div class="grid-item">
+                    <h3>Barra de fórmulas</h3>
+                    <p>Muestra y edita el contenido de la celda activa.</p>
+                    <p>Es especialmente útil para verificar y editar fórmulas largas y complejas.</p>
+                </div>
+                
+                <div class="grid-item">
+                    <h3>Asistente de funciones (fx)</h3>
+                    <p>Ayuda a insertar funciones correctamente.</p>
+                    <ol>
+                        <li>Haz clic en <strong>fx</strong> junto a la barra de fórmulas.</li>
+                        <li>Elige una función (ej: CONTAR.SI).</li>
+                        <li>Completa los argumentos guiados por Excel.</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <!-- Espacio para imagen de barra de fórmulas -->
+            <div class="image-placeholder">
+                <i class="fas fa-image"></i>
+                <p>Espacio para imagen: Barra de fórmulas y asistente de funciones</p>
+                <small>Recomendación: Captura mostrando el asistente de funciones abierto</small>
+            </div>
+            
+            <h2>Ejemplo práctico completo</h2>
+            
+            <p>Vamos a crear una tabla de calificaciones de estudiantes y aplicar las funciones aprendidas:</p>
+            
+            <table class="example-table">
+                <tr>
+                    <th>Estudiante</th>
+                    <th>Nota 1</th>
+                    <th>Nota 2</th>
+                    <th>Nota 3</th>
+                    <th>Total</th>
+                    <th>Promedio</th>
+                </tr>
+                <tr>
+                    <td>Ana</td>
+                    <td>85</td>
+                    <td>90</td>
+                    <td>78</td>
+                    <td class="formula">=SUMA(B2:D2)</td>
+                    <td class="formula">=PROMEDIO(B2:D2)</td>
+                </tr>
+                <tr>
+                    <td>Carlos</td>
+                    <td>92</td>
+                    <td>88</td>
+                    <td>95</td>
+                    <td class="formula">=SUMA(B3:D3)</td>
+                    <td class="formula">=PROMEDIO(B3:D3)</td>
+                </tr>
+                <tr>
+                    <td>María</td>
+                    <td>76</td>
+                    <td>82</td>
+                    <td>80</td>
+                    <td class="formula">=SUMA(B4:D4)</td>
+                    <td class="formula">=PROMEDIO(B4:D4)</td>
+                </tr>
+                <tr>
+                    <td colspan="4"><strong>Estadísticas</strong></td>
+                    <td><strong>=SUMA(E2:E4)</strong></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="4">Promedio del grupo</td>
+                    <td></td>
+                    <td><strong>=PROMEDIO(F2:F4)</strong></td>
+                </tr>
+                <tr>
+                    <td colspan="4">Nota más alta</td>
+                    <td></td>
+                    <td><strong>=MÁX(F2:F4)</strong></td>
+                </tr>
+                <tr>
+                    <td colspan="4">Nota más baja</td>
+                    <td></td>
+                    <td><strong>=MÍN(F2:F4)</strong></td>
+                </tr>
+            </table>
+            
+            <div class="tip-box">
+                <h4>💡 Consejo profesional</h4>
+                <p>Usa nombres descriptivos para tus rangos de datos. En lugar de usar <span class="formula">=SUMA(A1:A10)</span>, puedes nombrar el rango "Ventas_Trimestre1" y usar <span class="formula">=SUMA(Ventas_Trimestre1)</span>, lo que hace tus fórmulas más legibles y fáciles de mantener.</p>
+            </div>
+            
+            <h2>Actividades prácticas</h2>
+            
+            <div class="grid-container">
+                <div class="grid-item">
+                    <h3>Creación de Hoja de Gastos</h3>
+                    <p>Desarrollar una hoja de cálculo personal para gastos, aplicando SUMA y PROMEDIO para analizar tus finanzas.</p>
+                    <div class="image-placeholder" style="min-height: 120px;">
+                        <i class="fas fa-image"></i>
+                        <p>Ejemplo de hoja de gastos</p>
+                    </div>
+                </div>
+                
+                <div class="grid-item">
+                    <h3>Mini-Proyecto: Calificaciones</h3>
+                    <p>Calcular el promedio de notas de un grupo de estudiantes y identificar la nota más alta y más baja usando las funciones aprendidas.</p>
+                    <div class="image-placeholder" style="min-height: 120px;">
+                        <i class="fas fa-image"></i>
+                        <p>Tabla de calificaciones</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>Instrucciones para la actividad de gastos:</h3>
+                <ol>
+                    <li>Crea una tabla con las columnas: Fecha, Descripción, Categoría, Monto.</li>
+                    <li>Ingresa al menos 10 gastos de diferentes categorías (comida, transporte, entretenimiento, etc.).</li>
+                    <li>Utiliza la función <span class="formula">=SUMA()</span> para calcular el total de gastos.</li>
+                    <li>Emplea la función <span class="formula">=PROMEDIO()</span> para encontrar el gasto promedio.</li>
+                    <li>Usa <span class="formula">=MÁX()</span> y <span class="formula">=MÍN()</span> para identificar el gasto mayor y menor.</li>
+                    <li>Por último, aplica <span class="formula">=CONTAR()</span> para saber cuántos gastos registraste.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+    <div class="footer-container">
+        
+        <!-- Logo y descripción -->
+        <div class="footer-section">
+        <img src="Footer.png" alt="Safe Wave Logo" class="footer-logo">
+        <p>Connecting young people, creating unforgettable experiences and building the future, one click at a time.</p>
+        </div>
+
+        <!-- Enlaces rápidos -->
+        <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul class="footer-links">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../about-us.html">About Us</a></li>
+            <li><a href="../Courses.html">Courses</a></li>
+            <li><a href="#">Gallery</a></li>
+            <li><a href="../Contact.html">Contact</a></li>
+        </ul>
+        </div>
+
+        <!-- Contacto -->
+        <div class="footer-section">
+        <h3>Contact</h3>
+        <p>Safewafe@gmail.com</p>
+        <p>+507 1234-5678</p>
+        </div>
+
+        <!-- Redes sociales -->
+        <div class="footer-section">
+        <h3>Follow us at</h3>
+        <div class="footer-socials">
+            <a href="#"><img src="facebook-icon.png" alt="Facebook"></a>
+            <a href="#"><img src="instagram-icon.png" alt="Instagram"></a>
+            <a href="#"><img src="whatsapp-icon.png" alt="WhatsApp"></a>
+        </div>
+        </div>
+    </div>
+    <script>
+            document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('searchInput');
+        if (!searchInput) return;
+        searchInput.addEventListener('keyup', function(e) {
+            const query = e.target.value.toLowerCase();
+            // Elimina resaltados anteriores
+            document.querySelectorAll('.highlight-search').forEach(el => {
+            el.outerHTML = el.innerText;
+            });
+            if (query.length > 1) {
+            // Busca en todos los textos de la página
+            const mainArea = document.querySelector('.container');
+            const walker = document.createTreeWalker(mainArea, NodeFilter.SHOW_TEXT, null, false);
+            while(walker.nextNode()) {
+                const node = walker.currentNode;
+                if (node.nodeValue.toLowerCase().includes(query)) {
+                const span = document.createElement('span');
+                span.className = 'highlight-search';
+                const idx = node.nodeValue.toLowerCase().indexOf(query);
+                const before = node.nodeValue.slice(0, idx);
+                const match = node.nodeValue.slice(idx, idx + query.length);
+                const after = node.nodeValue.slice(idx + query.length);
+                span.textContent = match;
+                const frag = document.createDocumentFragment();
+                if (before) frag.appendChild(document.createTextNode(before));
+                frag.appendChild(span);
+                if (after) frag.appendChild(document.createTextNode(after));
+                node.parentNode.replaceChild(frag, node);
+                }
+            }
+            }
+        });
+    });
+</script>
+</body>
+</html>
