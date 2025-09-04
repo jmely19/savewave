@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="icon" type="image/png" href="Logo.png">
+    <title>Módulo 4: Formato Condicional y Validación</title>
+    <style>
+        :root {
+    --celeste: #e0f7ff;
+    --celeste-oscuro: #a0d2e8;
+    --verde-cana: #d4edda;
+    --verde-oscuro: #a8d5ba;
+    --texto: #2c3e50;
+    --acento: #3498db;
+    --primary-color: #3498db;
+    --secondary-color: #5cb85c;
+}
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--celeste);
+            color: var(--texto);
+            line-height: 1.6;
+        }
+
+                        /* Header */
+        header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 40px;
+        background: transparent;
+        }
+
+        header nav a {
+        position: relative;
+        color: #000000;
+        text-decoration: none;
+        transition: color 0.3s;
+        padding-bottom: 4px;
+        }
+
+        header nav a:hover,
+        header nav a.active {
+        color: #32cd32;
+        }
+
+
+        header nav a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 0;
+        height: 2px;
+        background: #32cd32;
+        transition: width 0.3s;
+        }
+
+        header nav a:hover::after,
+        header nav a.active::after {
+        width: 100%;
+        }
+
+        /* Logo */
+        .logo {
+        display: flex;
+        align-items: center;
+        font-size: 24px;
+        font-weight: bold;
+        }
+
+        .logo img {
+        width: 40px;
+        margin-right: 10px;
+        }
+
+        /* Menú de navegación */
+        nav {
+        display: flex;
+        align-items: center;
+        }
+
+        nav a {
+        margin: 0 15px;
+        color: #ffffff; /* Usa blanco para mejor contraste */
+        text-decoration: none;
+        font-weight: 500;
+        position: relative;
+        padding-bottom: 4px;
+        transition: color 0.3s;
+        }
+
+        nav a:hover,
+        nav a.active {
+        color: #32cd32;
+        }
+
+        nav a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 0;
+        height: 2px;
+        background: #32cd32;
+        transition: width 0.3s;
+        }
+
+        nav a:hover::after,
+        nav a.active::after {
+        width: 100%;
+        }
+
+        /* Barra de búsqueda */
+        .search-bar {
+        background-color: transparent;
+        border: 1.5px solid #333;
+        border-radius: 20px;
+        padding: 5px 15px;
+        display: flex;
+        align-items: center;
+        }
+
+        .search-bar input {
+        background: transparent;
+        border: none;
+        color: rgb(0, 0, 0);
+        outline: none;
+        padding: 5px;
+        }
+
+        .user-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 6px; /* Reduce el espacio entre la barra y el icono */
+        background: transparent;
+        border: none;
+        font-size: 1.6em;
+        color: #32cd32;
+        cursor: pointer;
+        text-decoration: none;
+        transition: color 0.2s;
+        }
+
+        .user-btn:hover {
+        color: #228b22;
+        }
+
+        .header-right {
+        display: flex;
+        align-items: center;
+        gap: 6px; /* Espacio pequeño entre barra y usuario */
+        }
+
+            /*Resalto del texto*/
+
+            .highlight-search {
+            background: yellow;
+            color: black;
+            border-radius: 3px;
+            padding: 0 2px;
+            }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, var(--celeste-oscuro), var(--verde-oscuro));
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .page-header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .back-btn {
+        display: inline-block;
+        margin-bottom: 24px;
+        padding: 8px 18px;
+        background: var(--secondary-color);
+        color: #fff;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 1rem;
+        transition: background 0.2s;
+        }
+        .back-btn:hover {
+        background: var(--primary-color);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: white;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        h2 {
+            color: var(--acento);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--celeste-oscuro);
+        }
+        
+        h3 {
+            color: var(--verde-oscuro);
+            margin: 15px 0 10px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        .image-placeholder {
+            background-color: var(--celeste-oscuro);
+            height: 200px;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .tip-box {
+            background-color: var(--verde-cana);
+            border-left: 5px solid var(--verde-oscuro);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .example {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: monospace;
+            overflow-x: auto;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+               /* ===== FOOTER ===== */
+    .footer {
+      background-color: #0a1a2b;
+      color: white;
+      padding: 40px 20px;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    .footer-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: auto;
+      text-align: left;
+    }
+
+    .footer-section {
+      flex: 1 1 250px;
+      margin: 10px;
+    }
+
+    .footer-logo {
+      width: 220px;
+    }
+
+    .footer h2 {
+      color: #7ed957;
+      margin-top: 10px;
+    }
+
+    .footer h3 {
+      color: #7ed957;
+      margin-bottom: 10px;
+    }
+
+    .footer-section p {
+      max-width: 260px;
+      line-height: 1.6;
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-links li {
+      margin: 6px 0;
+    }
+
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+      color: #7ed957;
+      cursor: pointer;
+    }
+
+    .footer-socials img {
+      width: 30px;
+      margin: 5px;
+      transition: transform 0.2s;
+    }
+
+    .footer-socials img:hover {
+      transform: scale(1.2);
+    }
+
+    .footer-line {
+      margin: 30px auto;
+      border-color: #2c3e50;
+      max-width: 90%;
+    }
+
+    .footer-copy {
+      font-size: 14px;
+      margin-top: 10px;
+    }
+       
+        
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+  <div class="logo">
+    <img src="Logo.png" alt="SafeWave Logo" />
+    SafeWave
+  </div>
+  <nav>
+    <a href="../index.html">Home</a>
+    <a href="../about-us.html">About us</a>
+    <a href="Courses.html"  class="active">Courses</a>
+    <a href="#">Gallery</a>
+    <a href="../Contact.html">Contact</a>
+  </nav>
+  <div class="header-right">
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Buscar..." />
+      🔍
+    </div>
+    <a href="L-R.html" class="user-btn" title="Registrarse">
+      <i class="fa-solid fa-user"></i>
+    </a>
+  </div>
+</header>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Módulo 4: Formato Condicional y Validación de Datos</h1>
+            prende a resaltar valores automáticamente según condiciones específicas y establecer reglas para limitar los tipos de datos ingresados.</p>
+        </div>
+
+        <a href="Excel.html" class="back-btn">
+            ← Volver a Excel
+        </a>
+    
+        <div class="card">
+            <h2>¿Qué es el Formato Condicional?</h2>
+            <p>El formato condicional es una herramienta poderosa que permite aplicar formatos específicos (colores, iconos, barras de datos) a celdas o rangos basándose en condiciones o criterios definidos.</p>
+            
+            <div class="image-placeholder">
+                [Imagen: Ejemplo de formato condicional aplicado a una planilla de cálculos]
+            </div>
+            
+            <p>Esta funcionalidad es especialmente útil para:</p>
+            <ul>
+                <li>Visualizar tendencias y patrones en tus datos</li>
+                <li>Identificar rápidamente valores atípicos o críticos</li>
+                <li>Destacar información importante automáticamente</li>
+                <li>Mejorar la legibilidad y el análisis de datos</li>
+            </ul>
+        </div>
+        
+        <div class="card">
+            <h2>Tipos de Formato Condicional</h2>
+            
+            <h3>Escalas de Color</h3>
+            <p>Aplican una gradación de colores según el valor de las celdas. Útil para visualizar distribuciones y variaciones en los datos.</p>
+            
+            <div class="image-placeholder">
+                [Imagen: Ejemplo de escala de colores aplicada a datos numéricos]
+            </div>
+            
+            <h3>Barras de Datos</h3>
+            <p>Insertan barras horizontales dentro de las celdas, donde la longitud representa el valor en relación con otros datos.</p>
+            
+            <h3>Conjuntos de Iconos</h3>
+            <p>Muestran iconos o símbolos visuales según rangos predefinidos (semáforos, banderas, estrellas, etc.).</p>
+            
+            <div class="image-placeholder">
+                [Imagen: Ejemplo de conjuntos de iconos aplicados a una tabla]
+            </div>
+            
+            <h3>Reglas Basadas en Fórmulas</h3>
+            <p>Permiten crear condiciones personalizadas usando fórmulas para un control total sobre el formato aplicado.</p>
+            
+            <div class="tip-box">
+                <strong>Tip profesional:</strong> Combina múltiples reglas de formato condicional para crear dashboards visualmente impactantes y altamente funcionales.
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>Validación de Datos</h2>
+            <p>La validación de datos restringe el tipo de información que puede introducirse en una celda, garantizando la integridad y consistencia de los datos.</p>
+            
+            <div class="image-placeholder">
+                [Imagen: Cuadro de diálogo de validación de datos mostrando diferentes opciones]
+            </div>
+            
+            <h3>Tipos de Validación</h3>
+            <div class="grid">
+                <div>
+                    <h3>Listas desplegables</h3>
+                    <p>Permiten seleccionar valores de una lista predefinida, evitando errores de escritura.</p>
+                </div>
+                <div>
+                    <h3>Validación numérica</h3>
+                    <p>Restringen entradas a números dentro de un rango específico o que cumplan condiciones.</p>
+                </div>
+                <div>
+                    <h3>Validación de texto</h3>
+                    <p>Limitan la longitud del texto o requieren patrones específicos.</p>
+                </div>
+                <div>
+                    <h3>Validación de fechas</h3>
+                    <p>Aseguran que las entradas sean fechas dentro de un período determinado.</p>
+                </div>
+            </div>
+            
+            <div class="example">
+                <strong>Ejemplo de validación personalizada:</strong><br>
+                =Y(ESNUMERO(B2), B2>=0, B2<=100)<br>
+                <em>Solo permite números entre 0 y 100</em>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>Mejores Prácticas</h2>
+            
+            <h3>Planifica antes de aplicar</h3>
+            <p>Define claramente qué quieres destacar y por qué. El exceso de formato condicional puede dificultar la lectura.</p>
+            
+            <h3>Usa colores con significado</h3>
+            <p>Asigna colores que tengan sentido en tu contexto (rojo para alertas, verde para valores positivos, etc.).</p>
+            
+            <div class="image-placeholder">
+                [Imagen: Paleta de colores apropiada para formato condicional]
+            </div>
+            
+            <h3>Documenta tus reglas</h3>
+            <p>Mantén un registro de las reglas aplicadas, especialmente cuando trabajes con fórmulas complejas.</p>
+            
+            <h3>Combina validación con formato</h3>
+            <p>Usa formato condicional para resaltar celdas que no cumplan las validaciones, incluso después de haber sido ingresadas.</p>
+            
+            <div class="tip-box">
+                <strong>Recuerda:</strong> La validación de datos previene errores, mientras que el formato condicional ayuda a visualizarlos. Usa ambas herramientas complementariamente.
+            </div>
+        </div>
+    </div>
+    
+        <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+    <div class="footer-container">
+        
+        <!-- Logo y descripción -->
+        <div class="footer-section">
+        <img src="Footer.png" alt="Safe Wave Logo" class="footer-logo">
+        <p>Connecting young people, creating unforgettable experiences and building the future, one click at a time.</p>
+        </div>
+
+        <!-- Enlaces rápidos -->
+        <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul class="footer-links">
+            <li><a href="../index.html">Home</a></li>
+        <li><a href="../about-us.html">About Us</a></li>
+        <li><a href="../Courses.html">Courses</a></li>
+            <li><a href="#">Gallery</a></li>
+            <li><a href="../Contact.html">Contact</a></li>
+        </ul>
+        </div>
+
+        <!-- Contacto -->
+        <div class="footer-section">
+        <h3>Contact</h3>
+        <p>Safewafe@gmail.com</p>
+        <p>+507 1234-5678</p>
+        </div>
+
+        <!-- Redes sociales -->
+        <div class="footer-section">
+        <h3>Follow us at</h3>
+        <div class="footer-socials">
+            <a href="#"><img src="facebook-icon.png" alt="Facebook"></a>
+            <a href="#"><img src="instagram-icon.png" alt="Instagram"></a>
+            <a href="#"><img src="whatsapp-icon.png" alt="WhatsApp"></a>
+        </div>
+        </div>
+    </div>
+    <script>
+            document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('searchInput');
+        if (!searchInput) return;
+        searchInput.addEventListener('keyup', function(e) {
+            const query = e.target.value.toLowerCase();
+            // Elimina resaltados anteriores
+            document.querySelectorAll('.highlight-search').forEach(el => {
+            el.outerHTML = el.innerText;
+            });
+            if (query.length > 1) {
+            // Busca en todos los textos de la página
+            const mainArea = document.querySelector('.container');
+            const walker = document.createTreeWalker(mainArea, NodeFilter.SHOW_TEXT, null, false);
+            while(walker.nextNode()) {
+                const node = walker.currentNode;
+                if (node.nodeValue.toLowerCase().includes(query)) {
+                const span = document.createElement('span');
+                span.className = 'highlight-search';
+                const idx = node.nodeValue.toLowerCase().indexOf(query);
+                const before = node.nodeValue.slice(0, idx);
+                const match = node.nodeValue.slice(idx, idx + query.length);
+                const after = node.nodeValue.slice(idx + query.length);
+                span.textContent = match;
+                const frag = document.createDocumentFragment();
+                if (before) frag.appendChild(document.createTextNode(before));
+                frag.appendChild(span);
+                if (after) frag.appendChild(document.createTextNode(after));
+                node.parentNode.replaceChild(frag, node);
+                }
+            }
+            }
+        });
+    });
+</script>
+</body>
+</html>

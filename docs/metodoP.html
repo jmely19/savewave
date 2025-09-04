@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Payment - SafeWave</title>
+  <link rel="icon" type="image/png" href="Imagenes/Logo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <script src="https://kit.fontawesome.com/a5dcd729dd.js" crossorigin="anonymous"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #000814, #003566);
+      color: white;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ========== HEADER ========== */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background: transparent;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .logo img {
+      width: 40px;
+      margin-right: 10px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+    }
+
+    nav a {
+      margin: 0 15px;
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+      padding-bottom: 4px;
+      transition: color 0.3s;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: #32cd32;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: #32cd32;
+      transition: width 0.3s;
+    }
+
+    nav a:hover::after,
+    nav a.active::after {
+      width: 100%;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .search-bar {
+      background-color: transparent;
+      border: 1.5px solid #333;
+      border-radius: 20px;
+      padding: 5px 15px;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-bar input {
+      background: transparent;
+      border: none;
+      color: white;
+      outline: none;
+      padding: 5px;
+    }
+
+    .user-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 6px;
+      background: transparent;
+      border: none;
+      font-size: 1.6em;
+      color: #32cd32;
+      cursor: pointer;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .user-btn:hover {
+      color: #228b22;
+    }
+
+    /* ========== HERO SECTION ========== */
+    .hero-payment {
+      text-align: center;
+      padding: 80px 40px 60px;
+      background: linear-gradient(135deg, rgba(0,180,216,0.1), rgba(0,200,150,0.1));
+      position: relative;
+    }
+
+    .hero-payment h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #4ea8de, #32cd32);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      color: #c7d8f7;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* ========== MAIN CONTAINER ========== */
+    .payment-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+    }
+
+    /* ========== PAYMENT LAYOUT ========== */
+    .payment-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 60px;
+    }
+
+    /* ========== PLAN SELECTOR ========== */
+    .plan-selector {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 40px;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .plan-selector h2 {
+      color: #4ea8de;
+      font-size: 2rem;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .plan-option {
+      background: linear-gradient(135deg, #0f3157, #1a3960);
+      border: 2px solid rgba(78, 168, 222, 0.3);
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .plan-option:hover {
+      border-color: #32cd32;
+      transform: translateX(5px);
+    }
+
+    .plan-option.selected {
+      border-color: #32cd32;
+      background: linear-gradient(135deg, #0f3157, #32cd32);
+      box-shadow: 0 10px 30px rgba(50, 205, 50, 0.2);
+    }
+
+    .plan-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .plan-name {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #32cd32;
+    }
+
+    .plan-price {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #4ea8de;
+    }
+
+    .plan-price .free {
+      color: #32cd32;
+    }
+
+    .plan-features {
+      list-style: none;
+      padding: 0;
+    }
+
+    .plan-features li {
+      color: #c7d8f7;
+      margin: 8px 0;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .plan-features li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #32cd32;
+      font-weight: bold;
+    }
+
+    .radio-input {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 20px;
+      height: 20px;
+      opacity: 0;
+    }
+
+    .radio-custom {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #4ea8de;
+      border-radius: 50%;
+      background: transparent;
+      transition: all 0.3s ease;
+    }
+
+    .plan-option.selected .radio-custom {
+      background: #32cd32;
+      border-color: #32cd32;
+    }
+
+    .plan-option.selected .radio-custom::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: white;
+    }
+
+    /* ========== PAYMENT FORM ========== */
+    .payment-form {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 40px;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .payment-form h2 {
+      color: #4ea8de;
+      font-size: 2rem;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .payment-methods {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 30px;
+      justify-content: center;
+    }
+
+    .payment-method {
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(78, 168, 222, 0.3);
+      border-radius: 10px;
+      padding: 15px 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      min-width: 100px;
+    }
+
+    .payment-method:hover,
+    .payment-method.active {
+      border-color: #32cd32;
+      background: rgba(50, 205, 50, 0.2);
+    }
+
+    .payment-method i {
+      font-size: 1.5rem;
+      display: block;
+      margin-bottom: 8px;
+      color: #4ea8de;
+    }
+
+    .payment-method.active i {
+      color: #32cd32;
+    }
+
+    .form-section {
+      margin-bottom: 30px;
+    }
+
+    .form-section h3 {
+      color: #32cd32;
+      margin-bottom: 20px;
+      font-size: 1.3rem;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      color: #4ea8de;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(78, 168, 222, 0.3);
+      border-radius: 10px;
+      padding: 15px;
+      color: white;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #32cd32;
+    }
+
+    .form-group input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .order-summary {
+      background: linear-gradient(135deg, #0f3157, #1a3960);
+      padding: 25px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      border: 1px solid rgba(78, 168, 222, 0.3);
+    }
+
+    .order-summary h3 {
+      color: #32cd32;
+      margin-bottom: 15px;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      color: #c7d8f7;
+    }
+
+    .summary-row.total {
+      border-top: 1px solid rgba(78, 168, 222, 0.3);
+      padding-top: 15px;
+      margin-top: 15px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #32cd32;
+    }
+
+    .submit-btn {
+      background: linear-gradient(135deg, #4ea8de, #32cd32);
+      color: white;
+      padding: 18px 40px;
+      border: none;
+      border-radius: 30px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(78, 168, 222, 0.4);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .security-badges {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+      color: #c7d8f7;
+      font-size: 0.9rem;
+    }
+
+    .security-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ========== FOOTER ========== */
+    .footer {
+      background-color: #0a1a2b;
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .footer-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: auto;
+      text-align: left;
+    }
+
+    .footer-section {
+      flex: 1 1 250px;
+      margin: 10px;
+    }
+
+    .footer-logo {
+      width: 220px;
+    }
+
+    .footer h3 {
+      color: #7ed957;
+      margin-bottom: 10px;
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-links li {
+      margin: 6px 0;
+    }
+
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: #7ed957;
+    }
+
+    .footer-line {
+      margin: 30px auto;
+      border-color: #2c3e50;
+      max-width: 90%;
+    }
+
+    .footer-copy {
+      font-size: 14px;
+      margin-top: 10px;
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 968px) {
+      .payment-layout {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      
+      .payment-methods {
+        flex-wrap: wrap;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 20px;
+        padding: 15px 20px;
+      }
+      
+      nav {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .hero-payment {
+        padding: 60px 20px 40px;
+      }
+      
+      .payment-container {
+        padding: 40px 15px;
+      }
+      
+      .plan-selector,
+      .payment-form {
+        padding: 25px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== HEADER ========== -->
+  <header>
+    <div class="logo">
+      <img src="Imagenes/Logo.png" alt="SafeWave Logo" />
+      SafeWave
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about-us.html">About us</a>
+      <a href="Courses.html">Courses</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="header-right">
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Buscar..." />
+        🔍
+      </div>
+      <a href="L-R.html" class="user-btn" title="Registrarse">
+        <i class="fa-solid fa-user"></i>
+      </a>
+    </div>
+  </header>
+
+  <!-- ========== HERO SECTION ========== -->
+  <section class="hero-payment">
+    <h1>Complete Your Purchase</h1>
+    <p class="hero-subtitle">Choose your plan and secure payment method to start your learning journey</p>
+  </section>
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <div class="payment-container">
+    
+    <div class="payment-layout">
+      
+      <!-- ========== PLAN SELECTOR ========== -->
+      <div class="plan-selector">
+        <h2>Choose Your Plan</h2>
+        
+        <div class="plan-option" data-plan="basic" data-price="0">
+          <input type="radio" name="plan" value="basic" class="radio-input" id="basic-plan">
+          <div class="radio-custom"></div>
+          <div class="plan-header">
+            <div class="plan-name">Basic Plan</div>
+            <div class="plan-price"><span class="free">FREE</span></div>
+          </div>
+          <ul class="plan-features">
+            <li>Sample Lessons</li>
+            <li>Basic Material & Challenges</li>
+            <li>Free Certification Course Demo</li>
+            <li>Community Access</li>
+          </ul>
+        </div>
+        
+        <div class="plan-option selected" data-plan="premium" data-price="4.99">
+          <input type="radio" name="plan" value="premium" class="radio-input" id="premium-plan" checked>
+          <div class="radio-custom"></div>
+          <div class="plan-header">
+            <div class="plan-name">Premium Plan</div>
+            <div class="plan-price">$4.99 <small>/month</small></div>
+          </div>
+          <ul class="plan-features">
+            <li>Discounts on Specialized Events</li>
+            <li>Digital Security Certification</li>
+            <li>Digital Humanization Resources</li>
+            <li>Personal Security Modules</li>
+            <li>VIP Pass Line Personal</li>
+            <li>Practical Projects</li>
+          </ul>
+        </div>
+        
+        <div class="plan-option" data-plan="corporate" data-price="9.99">
+          <input type="radio" name="plan" value="corporate" class="radio-input" id="corporate-plan">
+          <div class="radio-custom"></div>
+          <div class="plan-header">
+            <div class="plan-name">Corporate Plan</div>
+            <div class="plan-price">$9.99 <small>/month</small></div>
+          </div>
+          <ul class="plan-features">
+            <li>Small Business Security Modules</li>
+            <li>Group Mentorship</li>
+            <li>VIP Pass Line Corporate</li>
+            <li>Certification Course Demo</li>
+            <li>Digital Humanization Consultations</li>
+            <li>Priority Support</li>
+          </ul>
+        </div>
+        
+      </div>
+      
+      <!-- ========== PAYMENT FORM ========== -->
+      <div class="payment-form">
+        <h2>Payment Details</h2>
+        
+        <!-- Payment Methods -->
+        <div class="payment-methods">
+          <div class="payment-method active" data-method="card">
+            <i class="fa-solid fa-credit-card"></i>
+            <span>Card</span>
+          </div>
+          <div class="payment-method" data-method="paypal">
+            <i class="fa-brands fa-paypal"></i>
+            <span>PayPal</span>
+          </div>
+          <div class="payment-method" data-method="crypto">
+            <i class="fa-brands fa-bitcoin"></i>
+            <span>Crypto</span>
+          </div>
+        </div>
+        
+        <form id="paymentForm">
+          
+          <!-- Order Summary -->
+          <div class="order-summary">
+            <h3>Order Summary</h3>
+            <div class="summary-row">
+              <span>Plan:</span>
+              <span id="selected-plan-name">Premium Plan</span>
+            </div>
+            <div class="summary-row">
+              <span>Billing:</span>
+              <span>Monthly</span>
+            </div>
+            <div class="summary-row">
+              <span>Subtotal:</span>
+              <span id="subtotal">$4.99</span>
+            </div>
+            <div class="summary-row">
+              <span>Tax (8%):</span>
+              <span id="tax">$0.40</span>
+            </div>
+            <div class="summary-row total">
+              <span>Total:</span>
+              <span id="total">$5.39</span>
+            </div>
+          </div>
+          
+          <!-- Card Payment Form -->
+          <div id="card-form" class="payment-form-section">
+            <div class="form-section">
+              <h3>Card Information</h3>
+              <div class="form-group">
+                <label for="card-number">Card Number</label>
+                <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19">
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="expiry">Expiry Date</label>
+                  <input type="text" id="expiry" placeholder="MM/YY" maxlength="5">
+                </div>
+                <div class="form-group">
+                  <label for="cvv">CVV</label>
+                  <input type="text" id="cvv" placeholder="123" maxlength="4">
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-section">
+              <h3>Billing Information</h3>
+              <div class="form-group">
+                <label for="full-name">Full Name</label>
+                <input type="text" id="full-name" placeholder="John Doe" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="john@example.com" required>
+              </div>
+              <div class="form-group">
+                <label for="country">Country</label>
+                <select id="country">
+                  <option value="PA">Panama</option>
+                  <option value="US">United States</option>
+                  <option value="MX">Mexico</option>
+                  <option value="CO">Colombia</option>
+                  <option value="CR">Costa Rica</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          
+          <!-- PayPal Form -->
+          <div id="paypal-form" class="payment-form-section" style="display: none;">
+            <div class="form-section">
+              <h3>PayPal Payment</h3>
+              <p style="color: #c7d8f7; margin-bottom: 20px;">You will be redirected to PayPal to complete your payment securely.</p>
+              <div class="form-group">
+                <label for="paypal-email">PayPal Email</label>
+                <input type="email" id="paypal-email" placeholder="your-paypal@email.com">
+              </div>
+            </div>
+          </div>
+          
+          <!-- Crypto Form -->
+          <div id="crypto-form" class="payment-form-section" style="display: none;">
+            <div class="form-section">
+              <h3>Cryptocurrency Payment</h3>
+              <p style="color: #c7d8f7; margin-bottom: 20px;">Pay with Bitcoin, Ethereum, or other supported cryptocurrencies.</p>
+              <div class="form-group">
+                <label for="crypto-type">Select Cryptocurrency</label>
+                <select id="crypto-type">
+                  <option value="BTC">Bitcoin (BTC)</option>
+                  <option value="ETH">Ethereum (ETH)</option>
+                  <option value="LTC">Litecoin (LTC)</option>
+                  <option value="BCH">Bitcoin Cash (BCH)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          
+          <button type="submit" class="submit-btn" id="submit-payment">
+            <i class="fa-solid fa-lock" style="margin-right: 10px;"></i>
+            Complete Payment
+          </button>
+          
+          <div class="security-badges">
+            <div class="security-badge">
+              <i class="fa-solid fa-shield-halved"></i>
+              <span>SSL Secured</span>
+            </div>
+            <div class="security-badge">
+              <i class="fa-solid fa-lock"></i>
+              <span>256-bit Encryption</span>
+            </div>
+            <div class="security-badge">
+              <i class="fa-solid fa-certificate"></i>
+              <span>PCI Compliant</span>
+            </div>
+          </div>
+          
+        </form>
+      </div>
+      
+    </div>
+  </div>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-section">
+        <img src="Imagenes/Footer.png" alt="Safe Wave Logo" class="footer-logo">
+        <p>Connecting young people, creating unforgettable experiences and building the future, one click at a time.</p>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about-us.html">About Us</a></li>
+          <li><a href="Courses.html">Courses</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Contact</h3>
+        <p>Safewafe@gmail.com</p>
+        <p>+507 1234-5678</p>
+      </div>
+    </div>
+    <hr class="footer-line">
+    <p class="footer-copy">© 2025 Safe Wave. All rights reserved. - Made with love for youth.</p>
+  </footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    
+    // Plan selection functionality
+    const planOptions = document.querySelectorAll('.plan-option');
+    const selectedPlanName = document.getElementById('selected-plan-name');
+    const subtotal = document.getElementById('subtotal');
+    const tax = document.getElementById('tax');
+    const total = document.getElementById('total');
+    const submitBtn = document.getElementById('submit-payment');
+
+    planOptions.forEach(option => {
+      option.addEventListener('click', function() {
+        // Remove selected class from all options
+        planOptions.forEach(opt => opt.classList.remove('selected'));
+        
+        // Add selected class to clicked option
+        this.classList.add('selected');
+        
+        // Update radio button
+        const radioInput = this.querySelector('.radio-input');
+        radioInput.checked = true;
+        
+        // Update order summary
+        updateOrderSummary();
+      });
+    });
+
+    function updateOrderSummary() {
+      const selectedOption = document.querySelector('.plan-option.selected');
+      const planName = selectedOption.querySelector('.plan-name').textContent;
+      const planPrice = parseFloat(selectedOption.dataset.price);
+      
+      selectedPlanName.textContent = planName;
+      
+      if (planPrice === 0) {
+        subtotal.textContent = 'FREE';
+        tax.textContent = '$0.00';
+        total.textContent = 'FREE';
+        submitBtn.innerHTML = '<i class="fa-solid fa-download" style="margin-right: 10px;"></i>Start Free Plan';
+      } else {
+        const taxAmount = planPrice * 0.08;
+        const totalAmount = planPrice + taxAmount;
+        
+        subtotal.textContent = '$' + planPrice.toFixed(2);
+        tax.textContent = '$' + taxAmount.toFixed(2);
+        total.textContent = '$' + totalAmount.toFixed(2);
+        submitBtn.innerHTML = '<i class="fa-solid fa-lock" style="margin-right: 10px;"></i>Complete Payment';
+      }
+    }
+
+    // Payment method selection
+    const paymentMethods = document.querySelectorAll('.payment-method');
+    const paymentForms = document.querySelectorAll('.payment-form-section');
+
+    paymentMethods.forEach(method => {
+      method.addEventListener('click', function() {
+        // Remove active class from all methods
+        paymentMethods.forEach(m => m.classList.remove('active'));
+        
+        // Add active class to selected method
+        this.classList.add('active');
+        
+        // Hide all payment forms
+        paymentForms.forEach(form => form.style.display = 'none');
+        
+        // Show selected payment form
+        const selectedMethod = this.dataset.method;
+        document.getElementById(selectedMethod + '-form').style.display = 'block';
+      });
+    });
+
+    // Card number formatting
+    const cardNumberInput = document.getElementById('card-number');
+    if (cardNumberInput) {
+      cardNumberInput.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+        e.target.value = value;
+      });
+    }
+
+    // Expiry date formatting
+    const expiryInput = document.getElementById('expiry');
+    if (expiryInput) {
+      expiryInput.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length >= 2) {
+          value = value.substring(0, 2) + '/' + value.substring(2, 4);
+        }
+        e.target.value = value;
+      });
+    }
+
+    // CVV formatting
+    const cvvInput = document.getElementById('cvv');
+    if (cvvInput) {
+      cvvInput.addEventListener('input', function(e) {
+        e.target
