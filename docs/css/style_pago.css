@@ -552,9 +552,22 @@ nav a.active::after {
     flex-wrap: wrap;
     justify-content: center;
   }
-  .hero-payment {
-    padding: 60px 20px 40px;
-  }
+.hero-payment .small-text {
+  font-size: 16px;       /* antes estaba más grande, ahora más compacto */
+  line-height: 1.4;      /* para que no ocupe tanto espacio vertical */
+  max-width: 500px;      /* opcional: limita el ancho del párrafo */
+  margin: 0 auto;        /* centra el texto si max-width se aplica */
+}
+
+.hero-payment {
+  padding: 60px 20px 40px;  /* reduce el espacio arriba/abajo */
+}
+
+.hero-payment h1 {
+  font-size: clamp(2rem, 4vw, 3rem); /* reduce un poco el tamaño del título */
+  margin-bottom: 20px;
+}
+
   .payment-container {
     padding: 40px 15px;
   }
