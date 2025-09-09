@@ -1,0 +1,78 @@
+:root{
+.hero{
+display:grid;
+grid-template-columns:120px 1fr;
+gap:24px;
+align-items:center;
+}
+.badge{
+width:120px;height:120px;
+border-radius:50%;
+background:linear-gradient(135deg,var(--accent), #60a5fa);
+display:flex;align-items:center;justify-content:center;
+box-shadow: 0 6px 18px rgba(50,150,120,0.15);
+transform:scale(0.95);
+animation:pop 700ms ease-out forwards;
+}
+@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+
+
+/* Checkmark SVG */
+.badge svg{width:64px;height:64px;display:block}
+
+
+h1{margin:0 0 6px 0;font-size:28px;letter-spacing:-0.3px}
+p.lead{margin:0;color:var(--muted)}
+
+
+/* Acciones */
+.actions{margin-top:22px;display:flex;gap:12px;align-items:center}
+.btn{
+background:var(--accent);
+color:#052016;
+border:none;padding:12px 18px;border-radius:12px;font-weight:600;cursor:pointer;
+box-shadow: 0 6px 18px rgba(52,211,153,0.14);
+}
+.btn.secondary{
+background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)
+}
+
+
+/* Detalles */
+.meta{margin-top:18px;padding:14px;background:var(--glass);border-radius:12px;color:var(--muted);display:flex;gap:18px;flex-wrap:wrap}
+.meta .item{min-width:140px}
+.meta b{color:#fff;display:block}
+
+
+/* Confetti (CSS) */
+.confetti{
+pointer-events:none;position:absolute;inset:0;overflow:hidden;
+}
+.confetti span{
+position:absolute;display:block;width:10px;height:16px;border-radius:2px;opacity:0.95;transform-origin:center;
+animation:fall linear infinite;
+}
+/* different sizes + delays */
+.confetti span:nth-child(1){left:8%;background:#F472B6;animation-duration:3.6s;animation-delay:0.1s}
+.confetti span:nth-child(2){left:20%;background:#60A5FA;animation-duration:3.2s;animation-delay:0.3s}
+.confetti span:nth-child(3){left:32%;background:#FBBF24;animation-duration:4s;animation-delay:0.6s}
+.confetti span:nth-child(4){left:44%;background:#34D399;animation-duration:3.8s;animation-delay:0.2s}
+.confetti span:nth-child(5){left:56%;background:#A78BFA;animation-duration:4.4s;animation-delay:0.8s}
+.confetti span:nth-child(6){left:68%;background:#FB7185;animation-duration:3.7s;animation-delay:0.4s}
+.confetti span:nth-child(7){left:80%;background:#60A5FA;animation-duration:4.1s;animation-delay:0.5s}
+.confetti span:nth-child(8){left:90%;background:#34D399;animation-duration:3.9s;animation-delay:0.9s}
+
+
+@keyframes fall{
+0%{transform:translateY(-120%) rotate(0deg);opacity:1}
+100%{transform:translateY(120%) rotate(360deg);opacity:1}
+}
+
+
+/* Responsivo */
+@media (max-width:640px){
+.hero{grid-template-columns: 92px 1fr}
+.card{padding:20px}
+h1{font-size:22px}
+}
+```
