@@ -576,3 +576,79 @@ nav a.active::after {
     padding: 25px;
   }
 }
+
+/* Contenedor principal */
+.success-container {
+  text-align: center;
+  padding: 40px;
+}
+
+/* Ícono grande */
+.success-icon svg {
+  display: block;
+  margin: 0 auto 20px;
+}
+
+/* Texto principal */
+.success-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  color: #32cd32;
+  margin-bottom: 30px;
+}
+
+/* Botón de confirmar */
+.btn-confirm {
+  background: linear-gradient(135deg, #4ea8de, #32cd32);
+  color: white;
+  padding: 15px 40px;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-confirm:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(50, 205, 50, 0.4);
+}
+
+/* Contenedor principal */
+.failed-container {
+  text-align: center;
+  padding: 40px;
+}
+
+/* Ícono grande */
+.failed-icon svg {
+  display: block;
+  margin: 0 auto 20px;
+}
+
+/* Texto principal */
+.failed-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  color: #ff4d4d;
+  margin-bottom: 30px;
+}
+
+/* Botón */
+.btn-confirm-cancel {
+  background: linear-gradient(135deg, #ff4d4d, #cc0000);
+  color: white;
+  padding: 15px 40px;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-confirm-cancel:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(255, 77, 77, 0.4);
+}
